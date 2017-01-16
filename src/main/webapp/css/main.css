@@ -1,0 +1,52 @@
+body {
+    padding-top: 70px;
+}
+nav .nav.navbar-nav {
+    margin: 8px auto;
+}
+
+nav .container-fluid > a {
+    margin-top: 15px;
+    margin-right: 15px;
+
+}
+nav .container-fluid > form {
+    margin-right: 15px;
+}
+
+.hausmedia {
+    margin-top: 15px;
+}
+.footer {
+    bottom: 0;
+    width: 100%;
+    height: 170px;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    clear: left;
+    display: block;
+}
+.user-center {
+    height: 400px;
+}
+.user-center .user-sidebar a:hover {
+    cursor: pointer;
+}
+.user-sidebar {
+    height: 400px;
+    border: #f5f5f5 1px solid;
+}
+.user-playlist, .user-bewertung {
+    height: 400px;
+    margin-left: 15px;
+    padding-left: 15px;
+    border: #f5f5f5 1px solid;
+}
+
+.user-bewertung {
+    display: none;
+}
+
+.container.col-sm-offset-2.col-sm-8 {
+    margin-top: 10px;
+}
