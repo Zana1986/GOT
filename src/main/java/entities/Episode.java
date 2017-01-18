@@ -1,9 +1,7 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -32,8 +30,8 @@ public class Episode {
     @JoinColumn(name = "nummer", referencedColumnName = "nummer")
     private Staffel staffel;
 
-    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Handlungsort> episodeHOrte = new ArrayList<Handlungsort>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Handlungsort> episodeHOrte = new HashSet<Handlungsort>();
 
     @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AuftretenIn> owners = new ArrayList<AuftretenIn>();
@@ -103,7 +101,7 @@ public class Episode {
         return owners;
     }
 
-    public List<Handlungsort> getEpisodeHOrte() {
+    public Set<Handlungsort> getEpisodeHOrte() {
         return episodeHOrte;
     }
 

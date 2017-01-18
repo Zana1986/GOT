@@ -17,5 +17,18 @@
         </p>
     </div>
 </#if>
+    <#--<div class="panel panel-default">-->
+        <#--<div class="panel-heading">Playlisten</div>-->
+        <#--<div class="panel-body">-->
+            <#--<#if playlisten??>-->
+                <#--<ul>-->
+                    <#--<#list playlisten as p>-->
+                        <#--<li>Playliste ${p.id}</li>-->
+                    <#--</#list>-->
+                <#--</ul>-->
+            <#--</#if>-->
+            <#--<button class="btn btn-default" type="button">Neue Playlist</button>-->
+        <#--</div>-->
+    <#--</div>-->
 </#macro>
 <@dispaly_page/>

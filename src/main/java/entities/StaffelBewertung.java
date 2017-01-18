@@ -1,19 +1,22 @@
 package entities;
 
-import javax.persistence.*;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
-/**
- * Created by Yafei on 07/01/2017.
- */
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "staffelwertung")
 @PrimaryKeyJoinColumns(value = {
         @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class StaffelBewertung extends Bewertung {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "staffelnummer", referencedColumnName = "nummer")
     private Staffel staffel;
 
@@ -22,8 +25,8 @@ public class StaffelBewertung extends Bewertung {
         this.staffel = staffel;
     }
 
-    public StaffelBewertung(int bewertungid, int benutzerid, String textInhalt, int rating, Staffel staffel) {
-        super(bewertungid, benutzerid, textInhalt, rating);
+    public StaffelBewertung(int benutzerid, String textInhalt, int rating, Staffel staffel) {
+        super(benutzerid, textInhalt, rating);
         this.staffel = staffel;
     }
 
@@ -31,7 +34,7 @@ public class StaffelBewertung extends Bewertung {
         return staffel;
     }
 
-    public void setStaffel(Figur figur) {
+    public void setStaffel(Staffel staffel) {
         this.staffel = staffel;
     }
 

@@ -45,6 +45,16 @@ public class FigurBewertungHelper extends HibernateSessionFactorySupportImpl {
         return rating;
     }
 
+    public List getAllByBenutzer(String loginKennung) {
+        String queryString = "SELECT b FROM Bewertung b INNER JOIN Benutzer u ON(b.benutzerid=u.id)" +
+                "WHERE u.loginKennung = :kennung";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("kennung", loginKennung);
+        List ratings =  query.list();
+        this.closeAll();
+        return ratings;
+    }
+
     public List<FigurBewertung> getAll() {
         List figurwertungen = this.getSession().createQuery("FROM FigurBewertung").list();
         this.closeAll();

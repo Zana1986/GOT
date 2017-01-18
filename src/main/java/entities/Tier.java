@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "tier")
 @PrimaryKeyJoinColumn(name = "figurid")
 public class Tier extends Figur {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "figurid")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "besitztVon", foreignKey = @ForeignKey(name = "PERSON_ID_FK"))
     private Person person;
 
     public Tier() {}

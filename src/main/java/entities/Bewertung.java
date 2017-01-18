@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Bewertung {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bewertungid")
     private int bewertungid;
 
@@ -24,6 +25,12 @@ public class Bewertung {
     private int rating;
 
     public Bewertung() {}
+    public Bewertung(int benutzerid, String textInhalt, int rating) {
+        this.benutzerid = benutzerid;
+        this.textInhalt = textInhalt;
+        this.rating = rating;
+    }
+
     public Bewertung(int bewertungid, int benutzerid, String textInhalt, int rating) {
         this.bewertungid = bewertungid;
         this.benutzerid = benutzerid;

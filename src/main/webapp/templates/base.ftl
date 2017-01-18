@@ -19,33 +19,62 @@
     <@extra_files/>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li class="<#if activeStart??>active</#if>" role="presentation"><a class="navbar-link" href="/">Startseite</a></li>
                 <li class="<#if activeStaffel??>active</#if>" role="presentation"><a class="navbar-link" href="/staffel">Staffeln</a></li>
                 <li class="<#if activeHaus??>active</#if>" role="presentation"><a class="navbar-link" href="/haus">Häuser</a></li>
-                <li class="<#if activeRelation??>active</#if>" role="presentation"><a class="navbar-link" href="/relation">Relationen der Personen</a></li>
+                <li class="<#if activeRelation??>active</#if>" role="presentation"><a class="navbar-link" href="/relation">Beziehungen</a></li>
+                <li class="<#if activePerson??>active</#if>" role="presentation"><a class="navbar-link" href="/person">Personen</a></li>
+                <li class="<#if activeTier??>active</#if>" role="presentation"><a class="navbar-link" href="/tier">Tiere</a></li>
+                <li class="<#if activeFigur??>active</#if>" role="presentation"><a class="navbar-link" href="/figur">Figuren</a></li>
+                <li class="<#if activeOrt??>active</#if>" role="presentation"><a class="navbar-link" href="/ort">Orte</a></li>
+                <li class="<#if activeBewertung??>active</#if>" role="presentation"><a class="navbar-link" href="/bewertung">Bewertungen</a></li>
+                <li class="<#if activePlayliste??>active</#if>" role="presentation"><a class="navbar-link" href="/playliste">Playlisten</a></li>
             </ul>
+        </div>
+        <div class="container-fluid">
             <#if loginKennung??>
-                <a type="button" class="btn btn-default navbar-btn navbar-right" href="/logout">Abmelden</a>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="navbar-link" href="/benutzer?loginKennung=${loginKennung}"><span class="glyphicon glyphicon-user"></span> ${loginKennung}</a>
-                    </li>
-                </ul>
+                <div class="form-group">
+                    <a class="navbar-link" href="/benutzer?loginKennung=${loginKennung}"><span class="glyphicon glyphicon-user"></span> ${loginKennung}</a>
+                    <a type="button" class="btn btn-default navbar-btn" href="/logout">Abmelden</a>
+                </div>
             <#else>
-            <form class="navbar-form navbar-right" action="/login" method="post">
-                <div class="form-group">
-                    <input type="email" class="form-control" name="loginkennung" placeholder="Email/Login Kennung">
-                    <input type="password" class="form-control" name="passwort" placeholder="Passwort">
-                    <button type="submit" class="btn btn-primary">Anmelden</button>
-                </div>
-                <div class="form-group">
-                    <a type="button" class="btn btn-default navbar-btn navbar-right" role="button" href="/registerieren">Registrieren</a>
-                </div>
-            </form>
+                <form class="navbar-form" action="/login" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="loginkennung" placeholder="Email/Login Kennung">
+                        <input type="password" class="form-control" name="passwort" placeholder="Passwort">
+                        <button type="submit" class="btn btn-primary">Anmelden</button>
+                    </div>
+                    <div class="form-group">
+                        <a type="button" class="btn btn-default navbar-btn navbar-right" role="button" href="/registerieren">Registrieren</a>
+                    </div>
+                </form>
             </#if>
+        </div>
+        <div class="row">
+            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Figur" method="post">
+                <div class="form-group">
+                    <a href="/figur"><span class="label label-default">All</span></a>
+                    <input type="text" name="suchInfo" class="form-control" placeholder="Figur">
+                </div>
+                <button type="submit" class="btn btn-default">Suchen</button>
+            </form>
+            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Haus" method="post">
+                <div class="form-group">
+                    <a href="/haus"><span class="label label-default">All</span></a>
+                    <input type="text" name="suchInfo" class="form-control" placeholder="Haus">
+                </div>
+                <button type="submit" class="btn btn-default">Suchen</button>
+            </form>
+            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Staffel" method="post">
+                <div class="form-group">
+                    <a href="/staffel"><span class="label label-default">All</span></a>
+                    <input type="text" name="suchInfo" class="form-control" placeholder="Staffel">
+                </div>
+                <button type="submit" class="btn btn-default">Suchen</button>
+            </form>
         </div>
     </nav>
     <@page_body/>

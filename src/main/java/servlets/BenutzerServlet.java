@@ -2,6 +2,8 @@ package servlets;
 
 import crud.BenutzerHelper;
 import crud.BewertungHelper;
+import crud.FigurBewertungHelper;
+import entities.FigurBewertung;
 import entities.Playliste;
 
 import javax.servlet.ServletException;
@@ -28,24 +30,21 @@ public class BenutzerServlet extends HttpServlet {
         String loginKennung = request.getParameter("loginKennung");
         BenutzerHelper benutzerHelper = new BenutzerHelper();
         List results = benutzerHelper.getAllByLoginkennung(loginKennung);
-        if (results != null && results.size() > 0) {
-//                response.getWriter().write(((Object [])results.get(0)).length + "");
-
+        if (results != null && !results.isEmpty()) {
             Playliste playliste = (Playliste) ((Object [])results.get(0))[1];
-//                response.getWriter().write(playliste.getEpisoden().size() + "");
-//                response.getWriter().write(playliste.getEpisoden().get(0).getStaffel() + "");
             request.setAttribute("playliste", playliste);
-        } else {
-            response.getWriter().write("Error");
-            return;
         }
 
-        BewertungHelper bewertungHelper = new BewertungHelper();
-        List ratingResults = bewertungHelper.getAllByBenutzer(loginKennung);
+//        BewertungHelper bewertungHelper = new BewertungHelper();
+//        List ratingResults = bewertungHelper.getAllByBenutzer(loginKennung);
+//        if (ratingResults != null && ratingResults.size() > 0) {
+//            request.setAttribute("bewertungen", ratingResults);
+//        }
+
+        FigurBewertungHelper figurBewertungHelper = new FigurBewertungHelper();
+        List ratingResults = figurBewertungHelper.getAllByBenutzer(loginKennung);
         if (ratingResults != null && ratingResults.size() > 0) {
             request.setAttribute("bewertungen", ratingResults);
-        } else {
-
         }
 
         request.getRequestDispatcher("/templates/benutzer.ftl").forward(request, response);

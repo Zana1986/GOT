@@ -1,7 +1,6 @@
 <#include "base.ftl">
 <#macro page_body>
 
-<#if personen??>
 <div class="container-fluid">
     <div class="page-header">
         <h4><span class="label label-default">Bewertungsniveau</span>
@@ -16,44 +15,47 @@
         <h4><span class="label label-default">Beherrschen</span>
             <#if beherrschen??>
             <#list beherrschen as b>
-            ${b.ort.ortName}
+                <a href="/ort/${b.ort.ortName}">${b.ort.ortName}</a>
             </#list>
             </#if>
         </h4>
     </div>
-    <div class="row">
-    <#list personen as person>
-        <div class="col-sm-3 col-md-2">
-            <div class="thumbnail">
-                <img src="../images/Snow.jpg" alt="Profil">
-                <div class="caption">
-                    <h4>${person.person.name}</h4>
-                    <p>${person.person.titel}</p>
-                    <p>${person.person.biografie}</p>
-                    <p>${person.person.herkunftsort.ortName}</p>
-                    <p><span class="label label-default">Von</span>
-                        Staffel ${person.startPunkt.staffelNummer} Episode ${person.startPunkt.epiNummer}
-                    </p>
-                    <p><span class="label label-default">Bis</span>
-                        Staffel ${person.endPunkt.staffelNummer} Episode ${person.endPunkt.epiNummer}
-                    </p>
-                    <#if ratings??>
-                    <#list ratings as rating>
-                        <#list 1..5 as x>
-                            <#if x <= rating[1].rating>
-                                <span class="glyphicon glyphicon-star"></span>
-                            <#else>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </#if>
+    <#if personen??>
+        <div class="row">
+        <#list personen as person>
+            <div class="col-sm-3 col-md-2">
+                <div class="thumbnail">
+                    <img src="../images/Snow.jpg" alt="Profil">
+                    <div class="caption">
+                        <h4><a href="/person/${person.person.name}">${person.person.name}</a></h4>
+                        <p>Titel:${person.person.titel}</p>
+                        <p>Biografie:${person.person.biografie}</p>
+                        <p>Herkunfsort:<a href="/ort/${person.person.herkunftsort.ortName}">${person.person.herkunftsort.ortName}</a></p>
+                        <p><span class="label label-default">Von</span>
+                            <a href="/staffel">Staffel ${person.startPunkt.staffelNummer}</a>
+                            <a href="/staffel/${person.startPunkt.staffelNummer}?nummer=${person.startPunkt.staffelNummer}">Episode ${person.startPunkt.epiNummer}</a>
+                        </p>
+                        <p><span class="label label-default">Bis</span>
+                            <a href="/staffel">Staffel ${person.endPunkt.staffelNummer}</a>
+                            <a href="/staffel/${person.endPunkt.staffelNummer}?nummer=${person.endPunkt.staffelNummer}">Episode ${person.endPunkt.epiNummer}</a>
+                        </p>
+                        <#if ratings??>
+                        <#list ratings as rating>
+                            <#list 1..5 as x>
+                                <#if x <= rating[1].rating>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                <#else>
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                </#if>
+                            </#list>
                         </#list>
-                    </#list>
-                    </#if>
+                        </#if>
+                    </div>
                 </div>
             </div>
+        </#list>
         </div>
-    </#list>
-    </div>
+    </#if>
 </div>
-</#if>
 </#macro>
 <@dispaly_page/>

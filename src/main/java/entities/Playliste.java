@@ -30,8 +30,13 @@ public class Playliste {
     private List<Episode> episoden = new ArrayList<Episode>();
 
     public Playliste() {}
+
     public Playliste(Benutzer benutzer) {
         this.benutzer = benutzer;
+    }
+
+    public void setEpisoden(List<Episode> episoden) {
+        this.episoden = episoden;
     }
 
     public int getId() {

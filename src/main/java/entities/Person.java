@@ -2,7 +2,9 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -14,13 +16,13 @@ public class Person extends Figur {
     private String titel;
     private String biografie;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Angehoert> haeuse = new ArrayList<Angehoert>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<Angehoert> haeuse = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "freunde", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "freunde", cascade = CascadeType.ALL)
     private List<Relation> relations = new ArrayList<Relation>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personen", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "personen", cascade = CascadeType.ALL)
     private List<Relation> personen = new ArrayList<>();
 
     public Person() {}
@@ -58,7 +60,7 @@ public class Person extends Figur {
         this.personen = personen;
     }
 
-    public List<Angehoert> getHaeuse() {
+    public Set<Angehoert> getHaeuse() {
         return haeuse;
     }
 

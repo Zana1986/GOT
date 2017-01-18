@@ -17,6 +17,8 @@ public class Figur implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    //1: Person, 2:Tier
+    private int type;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="herkunftsort", referencedColumnName = "ortid")
@@ -37,6 +39,14 @@ public class Figur implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -83,6 +93,7 @@ public class Figur implements Serializable {
         if (that.getName() != this.getName()) return false;
         if (!that.getHerkunftsort().equals(this.getHerkunftsort())) return false;
         if (that.getId() != this.getId()) return false;
+        if (that.getType() != this.getType()) return false;
 
         return true;
     }
@@ -92,6 +103,7 @@ public class Figur implements Serializable {
         int result = getId();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (herkunftsort != null ? herkunftsort.hashCode() : 0);
+        result = 31 * result + type;
         return result;
     }
 }

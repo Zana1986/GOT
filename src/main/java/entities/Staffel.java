@@ -11,8 +11,11 @@ import java.util.Date;
 @Entity
 @Table(name = "staffel")
 public class Staffel {
+    @Id
     private int nummer;
+    @Column(name = "episodenanzahl")
     private int episodenAnzahl;
+    @Column(name = "startsdatum")
     private Date startsDatum;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffel")
@@ -25,7 +28,6 @@ public class Staffel {
         this.startsDatum = startsDatum;
     }
 
-    @Id
     public int getNummer() {
         return nummer;
     }
@@ -34,7 +36,6 @@ public class Staffel {
         this.nummer = nummer;
     }
 
-    @Column(name = "episodenanzahl")
     public int getEpisodenAnzahl() {
         return episodenAnzahl;
     }
@@ -43,7 +44,6 @@ public class Staffel {
         this.episodenAnzahl = episodenAnzahl;
     }
 
-    @Column(name = "startsdatum")
     public Date getStartsDatum() {
         return startsDatum;
     }

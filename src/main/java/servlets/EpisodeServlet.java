@@ -32,19 +32,24 @@ public class EpisodeServlet extends HttpServlet {
             if (episoden != null && !episoden.isEmpty()) {
                 request.setAttribute("episoden", episoden);
             }
+            //response.getWriter().write(episoden.get(0).getEpisodeHOrte().size() + "");
 
             EpisodeBewertungHelper episodeBewertungHelper = new EpisodeBewertungHelper();
             int[] ratings = new int[episoden.size()];
 
+
             AuftretenInHelper auftretenInHelper = new AuftretenInHelper();
             List<AuftretenIn>[] figurenEpisoden = new List[episoden.size()];
+            List<AuftretenIn> temp = null;
             for (Episode e : episoden) {
                 int i = e.getEpiNummer();
                 ratings[i] = episodeBewertungHelper.getAllByEpisode(staffelNummer, i);
                 figurenEpisoden[i] = auftretenInHelper.getAllByEpisode(staffelNummer, i);
             }
             request.setAttribute("ratings", ratings);
+
             request.setAttribute("figurenEpisoden", figurenEpisoden);
+
         }
 
         try {

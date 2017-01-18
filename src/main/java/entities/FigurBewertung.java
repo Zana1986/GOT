@@ -1,5 +1,8 @@
 package entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 /**
@@ -11,6 +14,7 @@ import javax.persistence.*;
         @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class FigurBewertung extends Bewertung {
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -22,8 +26,8 @@ public class FigurBewertung extends Bewertung {
         this.figur = figur;
     }
 
-    public FigurBewertung(int bewertungid,  int benutzerid, String textInhalt, int rating, Figur figur) {
-        super(bewertungid, benutzerid, textInhalt, rating);
+    public FigurBewertung(int benutzerid, String textInhalt, int rating, Figur figur) {
+        super(benutzerid, textInhalt, rating);
         this.figur = figur;
     }
 

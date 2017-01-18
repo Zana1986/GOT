@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -21,11 +23,11 @@ public class Ort {
     @Column(name = "ortname")
     private String ortName;
 
-    @OneToMany(mappedBy = "ort", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Handlungsort> hoOwners = new ArrayList<Handlungsort>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ort", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Handlungsort> hoOwners = new HashSet<>();
 
-    @OneToMany(mappedBy = "ort", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Beherrschen> owners = new ArrayList<Beherrschen>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ort", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Beherrschen> owners = new HashSet<Beherrschen>();
 
     public Ort() {}
     public Ort(String ortName) {
@@ -48,11 +50,11 @@ public class Ort {
         this.ortName = ortName;
     }
 
-    public List<Beherrschen> getOwners() {
+    public Set<Beherrschen> getOwners() {
         return owners;
     }
 
-    public List<Handlungsort> getHoOwners() {
+    public Set<Handlungsort> getHoOwners() {
         return hoOwners;
     }
 

@@ -54,6 +54,20 @@ public class BenutzerHelper extends HibernateSessionFactorySupportImpl {
         }
     }
 
+    public Benutzer getOne(String loginkennung) {
+        Query query = this.getSession().createQuery("FROM Benutzer b WHERE b.loginKennung = :kennung");
+        query.setParameter("kennung", loginkennung);
+        Benutzer benutzer = (Benutzer) query.uniqueResult();
+        return benutzer;
+    }
+
+    public int getBenutzerId(String loginkennung) {
+        Query query = this.getSession().createQuery("SELECT b.id FROM Benutzer b WHERE b.loginKennung = :kennung");
+        query.setParameter("kennung", loginkennung);
+        int benutzerId = (int) query.uniqueResult();
+        return benutzerId;
+    }
+
     public List getAllByLoginkennung(String loginKennung) {
         String queryString = "SELECT b, p FROM Benutzer b INNER JOIN Playliste p ON(b.id=p.benutzer.id) WHERE b.loginKennung = :kennung";
         Query query = this.getSession().createQuery(queryString);
