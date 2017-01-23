@@ -48,7 +48,7 @@ public class D3DataServlet extends HttpServlet {
             String nameb = r.getFreunde().getName();
             nodes[i] = new PersonNode(namea, namea, 1);
             nodes[i + len] = new PersonNode(nameb, nameb, 1);
-            links[i] = new PersonLink(i, i + 1, 1);
+            links[i] = new PersonLink(i, i + len, 1);
         }
 
         gson.toJson(networkJson, out);
