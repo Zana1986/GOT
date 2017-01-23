@@ -30,7 +30,7 @@ public class PlaylisteServlet extends HttpServlet {
         Matcher m = r.matcher(path);
         if (m.find()) {
             int playlistId = Integer.parseInt(m.group(1));
-            if (playlistId > 1) {
+            if (playlistId >= 1) {
                 Playliste playliste = playlisteHelper.getOne(playlistId);
                 request.setAttribute("playliste", playliste);
             }

@@ -1,5 +1,6 @@
 <#include "base.ftl">
 
+<#macro page_body>
 <div class="container">
     <h4>Playlisten</h4>
     <#if playlisten??>
@@ -19,4 +20,6 @@
         </div>
     </#if>
 </div>
+</#macro>
+<@dispaly_page/>
 

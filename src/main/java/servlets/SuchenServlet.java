@@ -32,9 +32,15 @@ public class SuchenServlet extends HttpServlet {
             results = suchenHelper.getHausLike(info);
             request.setAttribute("haus", 1);
         } else if (type.equals("Staffel")) {
-            int nummer;
-            if (info.equals("")) nummer = 1;
-            else nummer = Integer.parseInt(info);
+            int nummer = 1;
+            if (!info.equals("")){
+                try {
+                    nummer = Integer.parseInt(info);
+                } catch (NumberFormatException e) {
+                    response.getWriter().write("Bitte geben eine gueltige Zahl ein.");
+                    return ;
+                }
+            }
             results = suchenHelper.getStaffelLike(nummer);
             request.setAttribute("staffel", 1);
         } else if (type.equals("Playliste")) {

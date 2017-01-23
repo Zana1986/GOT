@@ -34,26 +34,8 @@
                 <li class="<#if activePlayliste??>active</#if>" role="presentation"><a class="navbar-link" href="/playliste">Playlisten</a></li>
             </ul>
         </div>
+
         <div class="container-fluid">
-            <#if loginKennung??>
-                <div class="form-group">
-                    <a class="navbar-link" href="/benutzer?loginKennung=${loginKennung}"><span class="glyphicon glyphicon-user"></span> ${loginKennung}</a>
-                    <a type="button" class="btn btn-default navbar-btn" href="/logout">Abmelden</a>
-                </div>
-            <#else>
-                <form class="navbar-form" action="/login" method="post">
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="loginkennung" placeholder="Email/Login Kennung">
-                        <input type="password" class="form-control" name="passwort" placeholder="Passwort">
-                        <button type="submit" class="btn btn-primary">Anmelden</button>
-                    </div>
-                    <div class="form-group">
-                        <a type="button" class="btn btn-default navbar-btn navbar-right" role="button" href="/registerieren">Registrieren</a>
-                    </div>
-                </form>
-            </#if>
-        </div>
-        <div class="row">
             <form class="navbar-form navbar-left" action="/suchen?suchTyp=Figur" method="post">
                 <div class="form-group">
                     <a href="/figur"><span class="label label-default">All</span></a>
@@ -75,6 +57,28 @@
                 </div>
                 <button type="submit" class="btn btn-default">Suchen</button>
             </form>
+        </div>
+
+        <div class="container-fluid">
+            <#if loginKennung??>
+                <div class="row navbar-form">
+                    <div class="form-group">
+                        <a class="navbar-link" href="/benutzer?loginKennung=${loginKennung}"><span class="glyphicon glyphicon-user"></span> ${loginKennung}</a>
+                        <a type="button" class="btn btn-default navbar-btn" href="/logout">Abmelden</a>
+                    </div>
+                </div>
+            <#else>
+                <form class="navbar-form" action="/login" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="loginkennung" placeholder="Email/Login Kennung">
+                        <input type="password" class="form-control" name="passwort" placeholder="Passwort">
+                        <button type="submit" class="btn btn-primary">Anmelden</button>
+                    </div>
+                    <div class="form-group">
+                        <a type="button" class="btn btn-default navbar-btn navbar-right" role="button" href="/registerieren">Registrieren</a>
+                    </div>
+                </form>
+            </#if>
         </div>
     </nav>
     <@page_body/>

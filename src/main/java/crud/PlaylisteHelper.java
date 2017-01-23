@@ -2,6 +2,7 @@ package crud;
 
 import db.HibernateSessionFactorySupportImpl;
 import entities.Benutzer;
+import entities.Enthalten;
 import entities.Episode;
 import entities.Playliste;
 import org.hibernate.query.Query;
@@ -37,8 +38,12 @@ public class PlaylisteHelper extends HibernateSessionFactorySupportImpl {
 
         EpisodeHelper episodeHelper = new EpisodeHelper();
         List<Episode> episoden = episodeHelper.getAll();
-        Playliste p = new Playliste(benutzer);
-        p.setEpisoden(episoden);
+        Playliste p = new Playliste(benutzer);;
+
+        for (Episode e: episoden) {
+            p.addEpisode(e);
+        }
+
         this.addPlayliste(p);
 
         return p;

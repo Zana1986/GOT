@@ -36,8 +36,8 @@ public class Episode {
     @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AuftretenIn> owners = new ArrayList<AuftretenIn>();
 
-    @ManyToMany(mappedBy = "episoden", cascade = CascadeType.ALL)
-    private List<Playliste> episodeOwners = new ArrayList<Playliste>();
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Enthalten> episodeOwners = new HashSet<>();
 
     public Episode() {}
     public Episode(int staffelNummer, int epiNummer, String titel, String inhaltsAngabe, Date erstausstrahlungsDatum, Staffel staffel) {
@@ -99,6 +99,22 @@ public class Episode {
 
     public List<AuftretenIn> getOwners() {
         return owners;
+    }
+
+    public void setEpisodeHOrte(Set<Handlungsort> episodeHOrte) {
+        this.episodeHOrte = episodeHOrte;
+    }
+
+    public void setOwners(List<AuftretenIn> owners) {
+        this.owners = owners;
+    }
+
+    public Set<Enthalten> getEpisodeOwners() {
+        return episodeOwners;
+    }
+
+    public void setEpisodeOwners(Set<Enthalten> episodeOwners) {
+        this.episodeOwners = episodeOwners;
     }
 
     public Set<Handlungsort> getEpisodeHOrte() {

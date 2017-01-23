@@ -2,7 +2,9 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yafei on 07/01/2017.
@@ -17,26 +19,16 @@ public class Playliste {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "gehoertzu", referencedColumnName = "benutzerid")
+    @JoinColumn(name = "gehoertzu", referencedColumnName = "benutzerid", foreignKey = @ForeignKey(name = "BENUTZER_ID_FK"))
     private Benutzer benutzer;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "enthalten",
-            joinColumns = {@JoinColumn(name = "playlisteid")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "episodenummer", referencedColumnName = "epinummer"),
-                    @JoinColumn(name = "nummer", referencedColumnName = "nummer")}
-    )
-    private List<Episode> episoden = new ArrayList<Episode>();
+    @OneToMany(mappedBy = "playliste", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Enthalten> episoden = new ArrayList<>();
 
     public Playliste() {}
 
     public Playliste(Benutzer benutzer) {
         this.benutzer = benutzer;
-    }
-
-    public void setEpisoden(List<Episode> episoden) {
-        this.episoden = episoden;
     }
 
     public int getId() {
@@ -55,13 +47,26 @@ public class Playliste {
         this.benutzer = benutzer;
     }
 
-    public List<Episode> getEpisoden() {
+    public List<Enthalten> getEpisoden() {
         return episoden;
     }
 
-    public void addEpisode(Episode episode) {
-        episoden.add(episode);
+    public void setEpisoden(List<Enthalten> episoden) {
+        this.episoden = episoden;
+    }
 
+    public void addEpisode(Episode episode) {
+        Enthalten listeEpisode = new Enthalten(this, episode);
+        episoden.add(listeEpisode);
+        episode.getEpisodeOwners().add(listeEpisode);
+    }
+
+    public void removeEpisode(Episode episode) {
+        Enthalten listeEpisode = new Enthalten(this, episode);
+        episoden.remove(listeEpisode);
+        episode.getEpisodeOwners().remove(listeEpisode);
+        listeEpisode.setEpisode(null);
+        listeEpisode.setPlayliste(null);
     }
 
     @Override
