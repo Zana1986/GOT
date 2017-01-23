@@ -47,7 +47,7 @@ public class BenutzerHelper extends HibernateSessionFactorySupportImpl {
         Criteria criteria = this.getSession().createCriteria(Benutzer.class);
         Benutzer b = (Benutzer) criteria.add(Restrictions.eq("loginKennung", loginkennung)).uniqueResult();
         this.closeAll();
-        if (b.getPasswort().equals(passwort)) {
+        if (b != null && b.getPasswort().equals(passwort)) {
             return true;
         } else {
             return false;
