@@ -20,7 +20,7 @@
     </li>
     <li>Beziehungen:
         <ul>
-            <#list person.relations as relation>
+            <#list person.personen as relation>
             <li><a href="/person/${relation.freunde.name}">${relation.freunde.name}</a> Typ: ${relation.relationsTyp}</li>
             </#list>
         </ul>

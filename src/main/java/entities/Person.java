@@ -56,12 +56,20 @@ public class Person extends Figur {
         this.relations = relations;
     }
 
+    public List<Relation> getPersonen() {
+        return personen;
+    }
+
     public void setPersonen(List<Relation> personen) {
         this.personen = personen;
     }
 
     public Set<Angehoert> getHaeuse() {
         return haeuse;
+    }
+
+    public void setHaeuse(Set<Angehoert> haeuse) {
+        this.haeuse = haeuse;
     }
 
     public void addHaus(Haus haus, Episode start, Episode end) {
