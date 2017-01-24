@@ -1,7 +1,11 @@
 package servlets;
 
 import crud.PlaylisteHelper;
+import crud.SuchenHelper;
+import entities.Figur;
+import entities.Haus;
 import entities.Playliste;
+import entities.Staffel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,11 +25,22 @@ public class IndexServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PlaylisteHelper playlisteHelper = new PlaylisteHelper();
-        List<Playliste> results = playlisteHelper.getAll();
-
-        if (results != null && !results.isEmpty()) {
-            request.setAttribute("playlisten", results);
+        SuchenHelper suchenHelper = new SuchenHelper();
+        List<Figur> figuren = suchenHelper.getFigurLimit(5);
+        if (figuren != null && !figuren.isEmpty()) {
+            request.setAttribute("figuren", figuren);
+        }
+        List<Haus> haeuser = suchenHelper.getHausLimit(5);
+        if (haeuser != null && !haeuser.isEmpty()) {
+            request.setAttribute("haeuser", haeuser);
+        }
+        List<Staffel> staffeln = suchenHelper.getStaffelLimit(5);
+        if (staffeln != null && !staffeln.isEmpty()) {
+            request.setAttribute("staffeln", staffeln);
+        }
+        List<Playliste> playlisten = suchenHelper.getPlaylisteLimit(5);
+        if (playlisten != null && !playlisten.isEmpty()) {
+            request.setAttribute("playlisten", playlisten);
         }
 
         request.setAttribute("activeStart", 1);

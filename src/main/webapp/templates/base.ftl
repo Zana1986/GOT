@@ -35,29 +35,29 @@
             </ul>
         </div>
 
-        <div class="container-fluid">
-            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Figur" method="post">
-                <div class="form-group">
-                    <a href="/figur"><span class="label label-default">All</span></a>
-                    <input type="text" name="suchInfo" class="form-control" placeholder="Figur">
-                </div>
-                <button type="submit" class="btn btn-default">Suchen</button>
-            </form>
-            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Haus" method="post">
-                <div class="form-group">
-                    <a href="/haus"><span class="label label-default">All</span></a>
-                    <input type="text" name="suchInfo" class="form-control" placeholder="Haus">
-                </div>
-                <button type="submit" class="btn btn-default">Suchen</button>
-            </form>
-            <form class="navbar-form navbar-left" action="/suchen?suchTyp=Staffel" method="post">
-                <div class="form-group">
-                    <a href="/staffel"><span class="label label-default">All</span></a>
-                    <input type="text" name="suchInfo" class="form-control" placeholder="Staffel">
-                </div>
-                <button type="submit" class="btn btn-default">Suchen</button>
-            </form>
-        </div>
+        <#--<div class="container-fluid">-->
+            <#--<form class="navbar-form navbar-left" action="/suchen?suchTyp=Figur" method="post">-->
+                <#--<div class="form-group">-->
+                    <#--<a href="/figur"><span class="label label-default">All</span></a>-->
+                    <#--<input type="text" name="suchInfo" class="form-control" placeholder="Figur">-->
+                <#--</div>-->
+                <#--<button type="submit" class="btn btn-default">Suchen</button>-->
+            <#--</form>-->
+            <#--<form class="navbar-form navbar-left" action="/suchen?suchTyp=Haus" method="post">-->
+                <#--<div class="form-group">-->
+                    <#--<a href="/haus"><span class="label label-default">All</span></a>-->
+                    <#--<input type="text" name="suchInfo" class="form-control" placeholder="Haus">-->
+                <#--</div>-->
+                <#--<button type="submit" class="btn btn-default">Suchen</button>-->
+            <#--</form>-->
+            <#--<form class="navbar-form navbar-left" action="/suchen?suchTyp=Staffel" method="post">-->
+                <#--<div class="form-group">-->
+                    <#--<a href="/staffel"><span class="label label-default">All</span></a>-->
+                    <#--<input type="text" name="suchInfo" class="form-control" placeholder="Staffel">-->
+                <#--</div>-->
+                <#--<button type="submit" class="btn btn-default">Suchen</button>-->
+            <#--</form>-->
+        <#--</div>-->
 
         <div class="container-fluid">
             <#if loginKennung??>
