@@ -12,10 +12,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game of Thrones</title>
-    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/bootstrap/jquery-1.12.4.min.js"></script>
-    <script src="../js/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/bootstrap/jquery-1.12.4.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
     <@extra_files/>
 </head>
 <body>
@@ -25,13 +25,14 @@
                 <li class="<#if activeStart??>active</#if>" role="presentation"><a class="navbar-link" href="/">Startseite</a></li>
                 <li class="<#if activeStaffel??>active</#if>" role="presentation"><a class="navbar-link" href="/staffel">Staffeln</a></li>
                 <li class="<#if activeHaus??>active</#if>" role="presentation"><a class="navbar-link" href="/haus">Häuser</a></li>
-                <li class="<#if activeRelation??>active</#if>" role="presentation"><a class="navbar-link" href="/relation">Beziehungen</a></li>
                 <li class="<#if activePerson??>active</#if>" role="presentation"><a class="navbar-link" href="/person">Personen</a></li>
                 <li class="<#if activeTier??>active</#if>" role="presentation"><a class="navbar-link" href="/tier">Tiere</a></li>
                 <li class="<#if activeFigur??>active</#if>" role="presentation"><a class="navbar-link" href="/figur">Figuren</a></li>
                 <li class="<#if activeOrt??>active</#if>" role="presentation"><a class="navbar-link" href="/ort">Orte</a></li>
                 <li class="<#if activeBewertung??>active</#if>" role="presentation"><a class="navbar-link" href="/bewertung">Bewertungen</a></li>
                 <li class="<#if activePlayliste??>active</#if>" role="presentation"><a class="navbar-link" href="/playliste">Playlisten</a></li>
+                <li class="<#if activeAlle??>active</#if>" role="presentation"><a class="navbar-link" href="/alle">Alle</a></li>
+                <li class="<#if activeRelation??>active</#if>" role="presentation"><a class="navbar-link" href="/relation">Beziehungen</a></li>
             </ul>
         </div>
 
