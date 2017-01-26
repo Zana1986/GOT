@@ -1,9 +1,7 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,16 +16,27 @@ public class Playliste {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "gehoertzu", referencedColumnName = "benutzerid", foreignKey = @ForeignKey(name = "BENUTZER_ID_FK"))
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "gehoertzu", referencedColumnName = "benutzerid")
     private Benutzer benutzer;
 
-    @OneToMany(mappedBy = "playliste", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Enthalten> episoden = new ArrayList<>();
+    @OneToMany(mappedBy = "playliste",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Enthalten> episoden = new HashSet<>();
 
     public Playliste() {}
 
-    public Playliste(Benutzer benutzer) {
+    public Playliste(String name, Benutzer benutzer) {
+        this.name = name;
         this.benutzer = benutzer;
     }
 
@@ -47,11 +56,11 @@ public class Playliste {
         this.benutzer = benutzer;
     }
 
-    public List<Enthalten> getEpisoden() {
+    public Set<Enthalten> getEpisoden() {
         return episoden;
     }
 
-    public void setEpisoden(List<Enthalten> episoden) {
+    public void setEpisoden(Set<Enthalten> episoden) {
         this.episoden = episoden;
     }
 
@@ -77,14 +86,17 @@ public class Playliste {
         final Playliste that = (Playliste) obj;
         if (!that.getBenutzer().equals(this.getBenutzer())) return false;
         if (that.getId() != this.getId()) return false;
+        if (!that.getName().equals(this.getName())) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = 17;
+        result = 31 * result + id;
         result = 31 * result + (benutzer != null ? benutzer.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

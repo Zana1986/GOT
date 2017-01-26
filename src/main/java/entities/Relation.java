@@ -18,11 +18,11 @@ public class Relation implements Serializable {
             @AttributeOverride(name = "figuridb", column = @Column(name = "figuridb", nullable = false)) })
     private RelationsId id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "figurida", nullable = false, insertable = false, updatable = false)
     private Person personen;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "figuridb", nullable = false, insertable = false, updatable = false)
     private Person freunde;
 

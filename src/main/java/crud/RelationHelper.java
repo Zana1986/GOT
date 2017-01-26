@@ -44,17 +44,4 @@ public class RelationHelper extends HibernateSessionFactorySupportImpl {
         this.closeAll();
         return relationen;
     }
-
-    public List getAllWithPeronen() {
-        String queryString = "SELECT r.figurida, r.figuridb, f1.name as namea, f2.name as nameb FROM beziehung r " +
-                "INNER JOIN person p1 ON(r.figurida = p1.figurid)" +
-                "INNER JOIN Person p2 ON(r.figuridb = p2.figurid) " +
-                "LEFT OUTER JOIN figur f1 ON(f1.figurid=r.figurida) " +
-                "LEFT OUTER JOIN figur f2 ON(f2.figurid=r.figuridb)";
-        Query query = this.getSession().createNativeQuery(queryString);
-        List relationen = query.list();
-
-        this.closeAll();
-        return relationen;
-    }
 }

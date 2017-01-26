@@ -1,61 +1,78 @@
 <#include "base.ftl">
 <#macro page_body>
 
-<div class="container-fluid">
-    <div class="page-header">
-        <h4><span class="label label-default">Bewertungsniveau</span>
-            <#list 1..5 as x>
-                <#if x <= bewertunsNiveau>
-                    <span class="glyphicon glyphicon-star"></span>
-                <#else>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                </#if>
-            </#list>
-        </h4>
-        <h4><span class="label label-default">Beherrschen</span>
-            <#if beherrschen??>
-            <#list beherrschen as b>
-                <a href="/ort/${b.ort.ortName}">${b.ort.ortName}</a>
-            </#list>
-            </#if>
-        </h4>
-    </div>
-    <#if personen??>
+    <#if loginKennung??>
+        <div class="container">
+            <form action="/bewertung/anlegen?loginKennung=${loginKennung}" method="post">
+                <div class="form-group">
+                    <label for="bewertung">Bewertung zu Haus</label>
+                    <select class="form-control" name="bewertungsNiveau">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <textarea class="form-control" name="bewertungsInhalt" rows="5" id="bewertung"></textarea>
+                </div>
+                <input name="bewertungstyp" value="haus" style="display: none">
+                <input name="hausid" value="${haus.id}" style="display: none">
+                <button type="submit" class="btn btn-default">Bewerten</button>
+            </form>
+        </div>
+    <#else>
+        <div class="container">
+            <h4 class="text-danger">Bitte anmelden zum Bewerten des Haus.</h4>
+        </div>
+    </#if>
+
+    <#if haus??>
+    <div class="container">
+        <div class="page-header">
+            <h4><span class="label label-default">Bewertungsniveau</span>
+                <#list 1..5 as x>
+                    <#if x <= ratingLevel>
+                        <span class="glyphicon glyphicon-star"></span>
+                    <#else>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                    </#if>
+                </#list>
+            </h4>
+            <h4>
+                <span class="label label-default">Beherrschen</span>
+                <#list haus.orte as ort>
+                    <a href="/ort/${ort.ort.ortName}">${ort.ort.ortName}</a>
+                </#list>
+            </h4>
+            <h4>
+                <span class="label label-default">Sitz</span>
+                <a href="/ort/${haus.sitz.standOrt.ortName}">${haus.sitz.standOrt.ortName}</a>
+            </h4>
+        </div>
         <div class="row">
-        <#list personen as person>
-            <div class="col-sm-3 col-md-2">
-                <div class="thumbnail">
-                    <img src="../images/Snow.jpg" alt="Profil">
+        <#list haus.owners as angehoert>
+            <div class="col-sm-4 col-md-3">
+                <div class="img-thumbnail">
+                    <img src="/images/Snow.jpg" alt="${angehoert.person.name}">
                     <div class="caption">
-                        <h4><a href="/person/${person.person.name}">${person.person.name}</a></h4>
-                        <p>Titel:${person.person.titel}</p>
-                        <p>Biografie:${person.person.biografie}</p>
-                        <p>Herkunfsort:<a href="/ort/${person.person.herkunftsort.ortName}">${person.person.herkunftsort.ortName}</a></p>
+                        <h4><a href="/person/${angehoert.person.name}">${angehoert.person.name}</a></h4>
+                        <p>Titel:${angehoert.person.titel}</p>
+                        <p>Biografie:${angehoert.person.biografie}</p>
+                        <p>Herkunfsort:<a href="/ort/${angehoert.person.herkunftsort.ortName}">${angehoert.person.herkunftsort.ortName}</a></p>
                         <p><span class="label label-default">Von</span>
-                            <a href="/staffel">Staffel ${person.startPunkt.staffelNummer}</a>
-                            <a href="/staffel/${person.startPunkt.staffelNummer}?nummer=${person.startPunkt.staffelNummer}">Episode ${person.startPunkt.epiNummer}</a>
+                            <a href="/staffel/s${angehoert.startPunkt.staffelNummer}">Staffel ${angehoert.startPunkt.staffelNummer}</a>
+                            <a href="/staffel/s${angehoert.startPunkt.staffelNummer}/e${angehoert.startPunkt.epiNummer}">Episode ${angehoert.startPunkt.epiNummer}</a>
                         </p>
                         <p><span class="label label-default">Bis</span>
-                            <a href="/staffel">Staffel ${person.endPunkt.staffelNummer}</a>
-                            <a href="/staffel/${person.endPunkt.staffelNummer}?nummer=${person.endPunkt.staffelNummer}">Episode ${person.endPunkt.epiNummer}</a>
+                            <a href="/staffel/s${angehoert.endPunkt.staffelNummer}">Staffel ${angehoert.endPunkt.staffelNummer}</a>
+                            <a href="/staffel/s${angehoert.endPunkt.staffelNummer}/e${angehoert.endPunkt.epiNummer}">Episode ${angehoert.endPunkt.epiNummer}</a>
                         </p>
-                        <#if ratings??>
-                        <#list ratings as rating>
-                            <#list 1..5 as x>
-                                <#if x <= rating[1].rating>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                <#else>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </#if>
-                            </#list>
-                        </#list>
-                        </#if>
                     </div>
                 </div>
             </div>
         </#list>
         </div>
-    </#if>
-</div>
+    </div>
+</#if>
 </#macro>
 <@dispaly_page/>

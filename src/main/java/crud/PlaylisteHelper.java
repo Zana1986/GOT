@@ -31,21 +31,21 @@ public class PlaylisteHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    public Playliste neuePlayliste(String loginKennung) {
+    public Playliste neuePlayliste(String playlisteName, String loginKennung) {
         BenutzerHelper benutzerHelper = new BenutzerHelper();
         Benutzer benutzer = benutzerHelper.getOne(loginKennung);
-        if (benutzer == null) return null;
+        if (benutzer == null) {
+            return null;
+        }
 
         EpisodeHelper episodeHelper = new EpisodeHelper();
         List<Episode> episoden = episodeHelper.getAll();
-        Playliste p = new Playliste(benutzer);;
 
+        Playliste p = new Playliste(playlisteName, benutzer);;
         for (Episode e: episoden) {
             p.addEpisode(e);
         }
-
         this.addPlayliste(p);
-
         return p;
     }
 
@@ -53,7 +53,9 @@ public class PlaylisteHelper extends HibernateSessionFactorySupportImpl {
         String queryString = "FROM Playliste p WHERE p.id = :id";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("id", id);
-        return (Playliste) query.uniqueResult();
+        Playliste playliste = (Playliste) query.uniqueResult();
+        this.closeAll();
+        return playliste;
     }
 
     public List<Playliste> getAll() {

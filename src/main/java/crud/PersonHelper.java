@@ -51,6 +51,7 @@ public class PersonHelper extends HibernateSessionFactorySupportImpl {
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("name", personName);
         Person p = (Person) query.uniqueResult();
+        this.closeAll();
         return p;
     }
 

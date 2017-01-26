@@ -7,7 +7,7 @@
         <ul class="list-group">
             <#list playliste.episoden as episode>
                 <li class="list-group-item">
-                    <a href="/staffel/${episode.episode.staffelNummer}?nummer=${episode.episode.staffelNummer}">
+                    <a href="/staffel/s${episode.episode.staffelNummer}/e${episode.episode.epiNummer}">
                         Staffel ${episode.episode.staffelNummer} Episode ${episode.episode.epiNummer}
                     </a>
                 </li>

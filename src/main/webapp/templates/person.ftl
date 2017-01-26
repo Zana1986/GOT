@@ -3,9 +3,9 @@
 <#macro page_body>
 <#if personen??>
 <div>
-    <ul class="list-group">
+    <ul>
         <#list personen as person>
-        <a href="/person/${person.name}"><li class="list-group-item">${person.name}</li></a>
+            <li><a href="/person/${person.name}">${person.name}</a></li>
         </#list>
     </ul>
 </div>

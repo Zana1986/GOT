@@ -26,18 +26,21 @@ public class Episode {
     private Date erstausstrahlungsDatum;
 
     @MapsId("staffelNummer")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "nummer", referencedColumnName = "nummer")
     private Staffel staffel;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Handlungsort> episodeHOrte = new HashSet<Handlungsort>();
 
-    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AuftretenIn> owners = new ArrayList<AuftretenIn>();
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<AuftretenIn> owners = new HashSet<>();
 
     @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Enthalten> episodeOwners = new HashSet<>();
+
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<EpisodeBewertung> episodeBewertungen = new HashSet<>();
 
     public Episode() {}
     public Episode(int staffelNummer, int epiNummer, String titel, String inhaltsAngabe, Date erstausstrahlungsDatum, Staffel staffel) {
@@ -97,7 +100,7 @@ public class Episode {
         this.epiNummer = epiNummer;
     }
 
-    public List<AuftretenIn> getOwners() {
+    public Set<AuftretenIn> getOwners() {
         return owners;
     }
 
@@ -105,7 +108,7 @@ public class Episode {
         this.episodeHOrte = episodeHOrte;
     }
 
-    public void setOwners(List<AuftretenIn> owners) {
+    public void setOwners(Set<AuftretenIn> owners) {
         this.owners = owners;
     }
 
@@ -115,6 +118,14 @@ public class Episode {
 
     public void setEpisodeOwners(Set<Enthalten> episodeOwners) {
         this.episodeOwners = episodeOwners;
+    }
+
+    public Set<EpisodeBewertung> getEpisodeBewertungen() {
+        return episodeBewertungen;
+    }
+
+    public void setEpisodeBewertungen(Set<EpisodeBewertung> episodeBewertungen) {
+        this.episodeBewertungen = episodeBewertungen;
     }
 
     public Set<Handlungsort> getEpisodeHOrte() {

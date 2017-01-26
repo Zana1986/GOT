@@ -2,8 +2,8 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -19,7 +19,7 @@ public class Staffel {
     private Date startsDatum;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffel")
-    private Collection<Episode> episoden = new ArrayList<Episode>();
+    private List<Episode> episoden = new ArrayList<Episode>();
 
     public Staffel() {}
     public Staffel(int nummer, int episodenAnzahl, Date startsDatum) {

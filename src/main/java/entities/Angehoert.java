@@ -91,7 +91,8 @@ public class Angehoert implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (person != null ? person.hashCode() : 0);
+        int result = 17;
+        result = 31 * result + (person != null ? person.hashCode() : 0);
         result = 31 * result + (haus != null ? haus.hashCode() : 0);
         result = 31 * result + (startPunkt != null ? startPunkt.hashCode() : 0);
         result = 31 * result + (endPunkt != null ? endPunkt.hashCode() : 0);

@@ -27,7 +27,7 @@ public class StaffelHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    private Staffel getOne(int nummer) {
+    public Staffel getOne(int nummer) {
         Staffel staffel = this.getSession().get(Staffel.class, nummer);
         this.closeAll();
         return staffel;

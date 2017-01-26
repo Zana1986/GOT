@@ -1,8 +1,8 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -20,22 +20,25 @@ public class Haus {
     private String motto;
     private String wappen;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "sitz", referencedColumnName = "burgid")
     private Burg sitz;
 
-    @OneToMany(mappedBy = "haus", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Angehoert> owners = new ArrayList<Angehoert>();
+    @OneToMany(mappedBy = "haus", fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Angehoert> owners = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinTable(name = "ansehen",
             joinColumns = {@JoinColumn(name = "hausid")},
             inverseJoinColumns = {@JoinColumn(name = "burgid")}
     )
     private Burg burg;
 
-    @OneToMany(mappedBy = "haus", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Beherrschen> orte = new ArrayList<Beherrschen>();
+    @OneToMany(mappedBy = "haus", fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Beherrschen> orte = new HashSet<>();
+
+    @OneToMany(mappedBy = "haus", fetch = FetchType.EAGER)
+    private Set<HausBewertung> hausBewertungen = new HashSet<>();
 
     public Haus() {}
     public Haus(String name, String motto, String wappen, Burg sitz) {
@@ -93,12 +96,28 @@ public class Haus {
         this.burg = burg;
     }
 
-    public List<Beherrschen> getOrte() {
+    public void setOwners(Set<Angehoert> owners) {
+        this.owners = owners;
+    }
+
+    public Set<Angehoert> getOwners() {
+        return owners;
+    }
+
+    public Set<HausBewertung> getHausBewertungen() {
+        return hausBewertungen;
+    }
+
+    public void setHausBewertungen(Set<HausBewertung> hausBewertungen) {
+        this.hausBewertungen = hausBewertungen;
+    }
+
+    public Set<Beherrschen> getOrte() {
         return orte;
     }
 
-    public List<Angehoert> getOwners() {
-        return owners;
+    public void setOrte(Set<Beherrschen> orte) {
+        this.orte = orte;
     }
 
     public void addOrt(Ort ort, Episode start, Episode end) {
@@ -134,7 +153,8 @@ public class Haus {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = 17;
+        result = 31 * result + id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (motto != null ? motto.hashCode() : 0);
         result = 31 * result + (sitz != null ? sitz.hashCode() : 0);

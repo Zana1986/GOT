@@ -8,7 +8,7 @@
         </#if>
         <div class="col-sm-6 col-md-4">
             <div class="media">
-                <div class="media-left media-middle">
+                <div class="media-left">
                     <a href="/haus/${haus.name}">
                         <img src="../images/House-${haus.name}-Main-Shield.png" alt="Haus ${haus.name}" class="img-rounded media-object">
                     </a>

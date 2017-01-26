@@ -16,7 +16,7 @@ public class Burg {
     private int id;
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "standort", referencedColumnName = "ortid")
     private Ort standOrt;
 

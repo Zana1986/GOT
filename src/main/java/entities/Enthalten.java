@@ -26,7 +26,6 @@ public class Enthalten implements Serializable {
         this.episode = episode;
     }
 
-
     public Playliste getPlayliste() {
         return playliste;
     }

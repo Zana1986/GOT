@@ -11,23 +11,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "figurwertung")
 @PrimaryKeyJoinColumns(value = {
-        @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class FigurBewertung extends Bewertung {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "figurid", referencedColumnName = "figurid")
     private Figur figur;
 
     public FigurBewertung() {}
-    public FigurBewertung(Figur figur) {
-        this.figur = figur;
-    }
 
-    public FigurBewertung(int benutzerid, String textInhalt, int rating, Figur figur) {
-        super(benutzerid, textInhalt, rating);
+    public FigurBewertung(String textInhalt, int rating, Benutzer benutzer, Figur figur) {
+        super(textInhalt, rating, benutzer);
         this.figur = figur;
     }
 
@@ -41,6 +37,8 @@ public class FigurBewertung extends Bewertung {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof FigurBewertung)) return false;
         if (!super.equals(obj)) return false;
 
         final FigurBewertung that = (FigurBewertung) obj;

@@ -11,7 +11,7 @@
         <li>Burg:
             <#if burge??>
             <#list burge as burg>
-                <a>${burg.name} </a>
+                ${burg.name}
             </#list>
             <#else>
             kein Burg Hier.
@@ -28,7 +28,7 @@
         </li>
         <li>Episoden:
         <#list ort.hoOwners as ho>
-            <a href="/staffel/${ho.episode.staffelNummer}?nummer=${ho.episode.staffelNummer}">Staffel ${ho.episode.staffelNummer} Episode ${ho.episode.epiNummer}</a>
+            <a href="/staffel/s${ho.episode.staffelNummer}/e${ho.episode.epiNummer}">Staffel ${ho.episode.staffelNummer} Episode ${ho.episode.epiNummer}</a>|
         </#list>
         </li>
     </ul>

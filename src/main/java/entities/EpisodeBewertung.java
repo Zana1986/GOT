@@ -11,13 +11,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "episodenwertung")
 @PrimaryKeyJoinColumns(value = {
-        @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class EpisodeBewertung extends Bewertung {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumns(value = {
             @JoinColumn(name = "staffelnummer", referencedColumnName = "nummer"),
             @JoinColumn(name = "episodenummer", referencedColumnName = "epinummer")
@@ -25,12 +24,9 @@ public class EpisodeBewertung extends Bewertung {
     private Episode episode;
 
     public EpisodeBewertung() {}
-    public EpisodeBewertung(Episode episode) {
-        this.episode = episode;
-    }
 
-    public EpisodeBewertung(int benutzerid, String textInhalt, int rating, Episode episode) {
-        super(benutzerid, textInhalt, rating);
+    public EpisodeBewertung(String textInhalt, int rating, Benutzer benutzer, Episode episode) {
+        super(textInhalt, rating, benutzer);
         this.episode = episode;
     }
 

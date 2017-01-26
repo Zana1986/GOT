@@ -11,27 +11,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "hauswertung")
 @PrimaryKeyJoinColumns(value = {
-        @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
-@OnDelete(action = OnDeleteAction.CASCADE)
+//@OnDelete(action = OnDeleteAction.CASCADE)
 public class HausBewertung extends Bewertung {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "hausid", referencedColumnName = "hausid")
     private Haus haus;
 
     public HausBewertung() {}
 
-    public HausBewertung(Haus haus) {
+    public HausBewertung(String textInhalt, int rating, Benutzer benutzer, Haus haus) {
+        super(textInhalt, rating, benutzer);
         this.haus = haus;
     }
-
-    public HausBewertung(int benutzerid, String textInhalt, int rating, Haus haus) {
-        super(benutzerid, textInhalt, rating);
-        this.haus = haus;
-    }
-
 
     public Haus getHaus() {
         return haus;
@@ -43,6 +37,8 @@ public class HausBewertung extends Bewertung {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof HausBewertung)) return false;
         if (!super.equals(obj)) return false;
 
         final HausBewertung that = (HausBewertung) obj;

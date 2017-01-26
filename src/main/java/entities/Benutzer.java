@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Yafei on 07/01/2017.
@@ -20,6 +22,13 @@ public class Benutzer {
 
     @Column(name = "loginkennung", unique = true)
     private String loginKennung;
+
+    @OneToMany(mappedBy = "benutzer", fetch = FetchType.EAGER)
+    private Set<Bewertung> bewertungen = new HashSet<>();
+
+//    // Stack Over
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "benutzer")
+//    private Set<Playliste> playlisten = new HashSet<>();
 
     public Benutzer() {}
     public Benutzer(String name, String passwort, String loginKennung) {
@@ -60,6 +69,22 @@ public class Benutzer {
         this.loginKennung = loginKennung;
     }
 
+    public Set<Bewertung> getBewertungen() {
+        return bewertungen;
+    }
+
+    public void setBewertungen(Set<Bewertung> bewertungen) {
+        this.bewertungen = bewertungen;
+    }
+
+//    public Set<Playliste> getPlaylisten() {
+//        return playlisten;
+//    }
+//
+//    public void setPlaylisten(Set<Playliste> playlisten) {
+//        this.playlisten = playlisten;
+//    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -72,5 +97,16 @@ public class Benutzer {
         if (!that.getPasswort().equals(this.getPasswort())) return false;
 
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = result * 31 + getId();
+        result = result * 31 + (getName() != null ? getName().hashCode() : 0);
+        result = result * 31 + (getPasswort() != null ? getPasswort().hashCode() : 0);
+        result = result * 31 + (getLoginKennung() != null ? getLoginKennung().hashCode() : 0);
+
+        return result;
     }
 }

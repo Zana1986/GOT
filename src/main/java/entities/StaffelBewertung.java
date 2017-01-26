@@ -5,28 +5,24 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "staffelwertung")
 @PrimaryKeyJoinColumns(value = {
-        @PrimaryKeyJoinColumn(name = "benutzerid"),
         @PrimaryKeyJoinColumn(name = "bewertungid")
 })
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class StaffelBewertung extends Bewertung {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "staffelnummer", referencedColumnName = "nummer")
     private Staffel staffel;
 
     public StaffelBewertung() {}
-    public StaffelBewertung(Staffel staffel) {
-        this.staffel = staffel;
-    }
-
-    public StaffelBewertung(int benutzerid, String textInhalt, int rating, Staffel staffel) {
-        super(benutzerid, textInhalt, rating);
+    public StaffelBewertung(String textInhalt, int rating, Benutzer benutzer, Staffel staffel) {
+        super(textInhalt, rating, benutzer);
         this.staffel = staffel;
     }
 

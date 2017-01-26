@@ -3,6 +3,11 @@ package servlets;
 import crud.AngehoertHelper;
 import crud.BeherrschenHelper;
 import crud.HausBewertungHelper;
+import crud.HausHelper;
+import entities.Angehoert;
+import entities.Beherrschen;
+import entities.Haus;
+import entities.HausBewertung;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,19 +39,37 @@ public class HausDetailServlet extends HttpServlet {
             hausName = m.group(1);
             //response.getWriter().write(hausName);
 
-            AngehoertHelper angehoertHelper = new AngehoertHelper();
-            List angehoertResults = angehoertHelper.getAllByHaus(hausName);
-            if (angehoertResults != null && !angehoertResults.isEmpty()) {
-                request.setAttribute("personen", angehoertResults);
+//            AngehoertHelper angehoertHelper = new AngehoertHelper();
+//            List<Angehoert> angehoertResults = angehoertHelper.getAllByHaus(hausName);
+//            if (angehoertResults != null && !angehoertResults.isEmpty()) {
+//                request.setAttribute("personen", angehoertResults);
+//            }
+//            BeherrschenHelper beherrschenHelper = new BeherrschenHelper();
+//            List<Beherrschen> beherrschenResults = beherrschenHelper.getAllByHaus(hausName);
+//            if (beherrschenResults != null && !beherrschenResults.isEmpty()) {
+//                request.setAttribute("beherrschen", beherrschenResults);
+//            }
+
+            HausHelper hausHelper = new HausHelper();
+            Haus haus = hausHelper.getOne(hausName);
+            if (haus != null) {
+                request.setAttribute("haus", haus);
+                int ratingLevel = 0;
+                int count = 0;
+//                for (HausBewertung hb: haus.getHausBewertungen()) {
+//                    ratingLevel += hb.getRating();
+//                    count += 1;
+//                }
+                ratingLevel = (count != 0 ? ratingLevel/count : 1);
+                request.setAttribute("ratingLevel", ratingLevel);
+
+                //response.getWriter().write(haus.getOwners().size() + " " + haus.getOrte().size());
             }
-            BeherrschenHelper beherrschenHelper = new BeherrschenHelper();
-            List beherrschenResults = beherrschenHelper.getAllByHaus(hausName);
-            if (beherrschenResults != null && !beherrschenResults.isEmpty()) {
-                request.setAttribute("beherrschen", beherrschenResults);
-            }
-            HausBewertungHelper hausBewertungHelper = new HausBewertungHelper();
-            int hausBewertungsNiveau = hausBewertungHelper.getAllByHaus(hausName);
-            request.setAttribute("bewertunsNiveau", hausBewertungsNiveau);
+
+
+//            HausBewertungHelper hausBewertungHelper = new HausBewertungHelper();
+//            int hausBewertungsNiveau = hausBewertungHelper.getOne(hausName);
+//            request.setAttribute("bewertunsNiveau", hausBewertungsNiveau);
 
             request.getRequestDispatcher("/templates/hausDetail.ftl").forward(request, response);
         }

@@ -92,6 +92,12 @@ public class Beherrschen implements Serializable {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int result = 17;
+        result = result * 31 + (haus != null ? haus.hashCode() : 0);
+        result = result * 31 + (ort != null ? ort.hashCode() : 0);
+        result = result * 31 + (startEpisode != null ? startEpisode.hashCode() : 0);
+        result = result * 31 + (endEpisode != null ? endEpisode.hashCode() : 0);
+
+        return result;
     }
 }

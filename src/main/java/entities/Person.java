@@ -20,10 +20,10 @@ public class Person extends Figur {
     private Set<Angehoert> haeuse = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "freunde", cascade = CascadeType.ALL)
-    private List<Relation> relations = new ArrayList<Relation>();
+    private Set<Relation> relations = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "personen", cascade = CascadeType.ALL)
-    private List<Relation> personen = new ArrayList<>();
+    private Set<Relation> personen = new HashSet<>();
 
     public Person() {}
     public Person(String name, Ort herkunftsort, String titel, String biografie) {
@@ -48,19 +48,19 @@ public class Person extends Figur {
         this.biografie = biografie;
     }
 
-    public List<Relation> getRelations() {
+    public Set<Relation> getRelations() {
         return relations;
     }
 
-    public void setRelations(List<Relation> relations) {
+    public void setRelations(Set<Relation> relations) {
         this.relations = relations;
     }
 
-    public List<Relation> getPersonen() {
+    public Set<Relation> getPersonen() {
         return personen;
     }
 
-    public void setPersonen(List<Relation> personen) {
+    public void setPersonen(Set<Relation> personen) {
         this.personen = personen;
     }
 
@@ -92,20 +92,20 @@ public class Person extends Figur {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || !(obj instanceof Person)) return false;
+        if (!super.equals(obj)) return false;
 
-        final Person that = (Person) obj;
-        if (that.getName() != this.getName()) return false;
-        if (that.getTitel() != this.getTitel()) return false;
-        if (that.getId() != this.getId()) return false;
+        Person that = (Person) this;
+        if (!that.getTitel().equals(this.getTitel())) return false;
+        if (!that.getBiografie().equals(this.getBiografie())) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + (titel != null ? titel.hashCode() : 0);
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + (getTitel() != null ? getTitel().hashCode() : 0);
+        result = 31 * result + (getBiografie() != null ? getBiografie().hashCode() : 0);
         return result;
     }
 }

@@ -5,7 +5,7 @@
             <#list staffeln as staffel>
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <a href="/staffel/${staffel.nummer}?nummer=${staffel.nummer}"><img src="../images/GameOfThronesSeason${staffel.nummer}.jpg" alt="Staffel !{staffel.nummer}"></a>
+                        <a href="/staffel/s${staffel.nummer}"><img src="../images/GameOfThronesSeason${staffel.nummer}.jpg" alt="Staffel !{staffel.nummer}"></a>
                         <div class="caption">
                             <h3>Kurzfassung</h3>
                             <ul>

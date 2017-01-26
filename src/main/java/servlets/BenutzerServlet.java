@@ -3,6 +3,7 @@ package servlets;
 import crud.BenutzerHelper;
 import crud.BewertungHelper;
 import crud.FigurBewertungHelper;
+import entities.Benutzer;
 import entities.FigurBewertung;
 import entities.Playliste;
 
@@ -29,11 +30,20 @@ public class BenutzerServlet extends HttpServlet {
 
         String loginKennung = request.getParameter("loginKennung");
         BenutzerHelper benutzerHelper = new BenutzerHelper();
-        List results = benutzerHelper.getAllByLoginkennung(loginKennung);
-        if (results != null && !results.isEmpty()) {
-            Playliste playliste = (Playliste) ((Object [])results.get(0))[1];
-            request.setAttribute("playliste", playliste);
+        Benutzer benutzer = benutzerHelper.getOne(loginKennung);
+
+        if (benutzer != null) {
+            request.setAttribute("benutzer", benutzer);
         }
+
+        response.getWriter().write("Noch nicht implementiert.");
+
+
+//        List results = benutzerHelper.getAllByLoginkennung(loginKennung);
+//        if (results != null && !results.isEmpty()) {
+//            Playliste playliste = (Playliste) ((Object [])results.get(0))[1];
+//            request.setAttribute("playliste", playliste);
+//        }
 
 //        BewertungHelper bewertungHelper = new BewertungHelper();
 //        List ratingResults = bewertungHelper.getAllByBenutzer(loginKennung);
@@ -41,13 +51,15 @@ public class BenutzerServlet extends HttpServlet {
 //            request.setAttribute("bewertungen", ratingResults);
 //        }
 
-        FigurBewertungHelper figurBewertungHelper = new FigurBewertungHelper();
-        List ratingResults = figurBewertungHelper.getAllByBenutzer(loginKennung);
-        if (ratingResults != null && ratingResults.size() > 0) {
-            request.setAttribute("bewertungen", ratingResults);
-        }
+//        FigurBewertungHelper figurBewertungHelper = new FigurBewertungHelper();
+//        List ratingResults = figurBewertungHelper.getAllByBenutzer(loginKennung);
+//        List<> ratingResults = figurBewertungHelper.getAllByBenutzer(loginKennung);
 
-        request.getRequestDispatcher("/templates/benutzer.ftl").forward(request, response);
+//        if (ratingResults != null && ratingResults.size() > 0) {
+//            request.setAttribute("bewertungen", ratingResults);
+//        }
+
+        //request.getRequestDispatcher("/templates/benutzer.ftl").forward(request, response);
 
     }
 }

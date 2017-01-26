@@ -38,11 +38,21 @@ public class FigurHelper extends HibernateSessionFactorySupportImpl {
 //    }
 
     public Figur getOne(String figurName) {
-        String queryString = "FROM Figur p WHERE p.name = :name";
+        String queryString = "FROM Figur f WHERE f.name = :name";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("name", figurName);
-        Figur p = (Figur) query.uniqueResult();
-        return p;
+        Figur figur = (Figur) query.uniqueResult();
+        this.closeAll();
+        return figur;
+    }
+
+    public Figur getOneById(int figurid) {
+        String queryString = "FROM Figur f WHERE f.id = :fid";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("fid", figurid);
+        Figur figur = (Figur) query.uniqueResult();
+        this.closeAll();
+        return figur;
     }
 
     public List<Figur> getAll() {

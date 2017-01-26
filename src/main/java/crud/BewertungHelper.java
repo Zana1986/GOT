@@ -1,9 +1,7 @@
 package crud;
 
 import db.HibernateSessionFactorySupportImpl;
-import entities.Benutzer;
-import entities.Bewertung;
-import entities.BewertungPK;
+import entities.*;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -25,18 +23,17 @@ public class BewertungHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    public Bewertung deleteBewertung(int benutzerId) {
-        Bewertung b = this.getOne(benutzerId);
+    public void deleteBewertung(Bewertung wertung) {
+//        Bewertung b = this.getOne(benutzerId);
         // get persistented object
-        Object o = this.getSession().load(Bewertung.class, new BewertungPK(b.getBewertungid(), b.getBenutzerid()));
+//        Object o = this.getSession().load(Bewertung.class, new BewertungPK(b.getBewertungid(), b.getBenutzerid()));
         this.beginTrasaction();
-        this.getSession().delete(o);
+        this.getSession().delete(wertung);
         this.commitTransaction();
-        return b;
     }
 
     public Bewertung getOne(int benutzerId) {
-        String queryString = "FROM Bewertung b WHERE b.benutzerid = :id";
+        String queryString = "FROM Bewertung b WHERE b.benutzer.id = :id";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("id", benutzerId);
         Bewertung bewertung = (Bewertung) query.uniqueResult();
@@ -45,28 +42,11 @@ public class BewertungHelper extends HibernateSessionFactorySupportImpl {
         return bewertung;
     }
 
-    public List getAllByBenutzer(String loginKennung) {
-        String queryString = "SELECT b FROM Bewertung b INNER JOIN Benutzer u ON(b.benutzerid=u.id)" +
-                "WHERE u.loginKennung = :kennung";
-        Query query = this.getSession().createQuery(queryString);
-        query.setParameter("kennung", loginKennung);
-        List ratings =  query.list();
-        this.closeAll();
-        return ratings;
-    }
-
-    public List getAllWithNutzer() {
-        String queryString = "SELECT b, u FROM Bewertung b INNER JOIN Benutzer u ON(b.benutzerid=u.id)";
-        Query query = this.getSession().createQuery(queryString);
-        List ratingsWithNutzer =  query.list();
-        this.closeAll();
-        return ratingsWithNutzer;
-    }
-
     public int getDurchschnitt() {
         String queryString = "SELECT AVG(rating) FROM Bewertung";
         Query query = this.getSession().createQuery(queryString);
         Double d = (Double) query.uniqueResult();
+        this.closeAll();
         if (d != null) {
             int avgRating = (int) Math.round(d);
             return avgRating;
@@ -75,13 +55,54 @@ public class BewertungHelper extends HibernateSessionFactorySupportImpl {
         }
     }
 
-    public boolean isExisted(int benutzerId) {
+    public HausBewertung isExistedByHaus(int benutzerId, int hausid) {
+        String queryString = "FROM HausBewertung h WHERE h.benutzer.id = :bid AND h.haus.id = :hid";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("bid", benutzerId);
+        query.setParameter("hid", hausid);
+        HausBewertung hausBewertung = (HausBewertung) query.uniqueResult();
+        this.closeAll();
 
-        return this.getOne(benutzerId) != null;
+        return hausBewertung;
+    }
+
+    public FigurBewertung isExistedByFigur(int benutzerId, int figurid) {
+        String queryString = "FROM FigurBewertung f WHERE f.benutzer.id = :bid AND f.figur.id = :fid";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("bid", benutzerId);
+        query.setParameter("fid", figurid);
+        FigurBewertung figurBewertung = (FigurBewertung) query.uniqueResult();
+        this.closeAll();
+
+        return figurBewertung;
+    }
+
+    public StaffelBewertung isExistedByStaffel(int benutzerId, int staffelnummer) {
+        String queryString = "FROM StaffelBewertung s WHERE s.benutzer.id = :bid AND s.staffel.id = :nummer";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("bid", benutzerId);
+        query.setParameter("nummer", staffelnummer);
+        StaffelBewertung staffelBewertung = (StaffelBewertung) query.uniqueResult();
+        this.closeAll();
+
+        return  staffelBewertung;
+    }
+
+    public EpisodeBewertung isExistedByEpisode(int benutzerId, int staffelnummer, int episodenummer) {
+        String queryString = "FROM EpisodeBewertung e WHERE e.benutzer.id = :bid " +
+                "AND e.episode.staffelNummer = :nummer AND e.episode.epiNummer = :epiNummer";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("bid", benutzerId);
+        query.setParameter("nummer", staffelnummer);
+        query.setParameter("epiNummer", episodenummer);
+        EpisodeBewertung episodeBewertung = (EpisodeBewertung) query.uniqueResult();
+        this.closeAll();
+
+        return episodeBewertung;
     }
 
     public List<Bewertung> getAll() {
-        List wertungen = this.getSession().createQuery("FROM Bewertung").list();
+        List<Bewertung> wertungen = this.getSession().createQuery("FROM Bewertung").list();
         this.closeAll();
         return wertungen;
     }

@@ -29,32 +29,6 @@ public class FigurBewertungHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    public int getAllByFigur(String figurname) {
-        String queryString = "SELECT AVG(fb.rating) FROM FigurBewertung fb INNER JOIN Figur f ON(f.id=fb.figur.id)" +
-                "WHERE f.name = :name";
-        Query query = this.getSession().createQuery(queryString);
-        query.setParameter("name", figurname);
-        List<Double> ratings = (List<Double>) query.list();;
-        int rating = 0;
-        if (ratings != null || !ratings.isEmpty()) {
-            if (ratings.get(0) != null) {
-                rating = (int) Math.round(ratings.get(0));
-            }
-        }
-        this.closeAll();
-        return rating;
-    }
-
-    public List getAllByBenutzer(String loginKennung) {
-        String queryString = "SELECT b FROM Bewertung b INNER JOIN Benutzer u ON(b.benutzerid=u.id)" +
-                "WHERE u.loginKennung = :kennung";
-        Query query = this.getSession().createQuery(queryString);
-        query.setParameter("kennung", loginKennung);
-        List ratings =  query.list();
-        this.closeAll();
-        return ratings;
-    }
-
     public List<FigurBewertung> getAll() {
         List figurwertungen = this.getSession().createQuery("FROM FigurBewertung").list();
         this.closeAll();

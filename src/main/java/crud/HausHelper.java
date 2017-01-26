@@ -28,13 +28,22 @@ public class HausHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    public List<Haus> getAllByStaffel(int hausName) {
+    public Haus getOne(String hausName) {
         String queryString = "FROM Haus h WHERE h.name = :name";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("name", hausName);
-        List<Haus> hausn = (List<Haus>) query.list();
+        Haus haus = (Haus) query.uniqueResult();
         this.closeAll();
-        return hausn;
+        return haus;
+    }
+
+    public Haus getOneById(int hausid) {
+        String queryString = "FROM Haus h WHERE h.id = :hid";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("hid", hausid);
+        Haus haus = (Haus) query.uniqueResult();
+        this.closeAll();
+        return haus;
     }
 
     public List<Haus> getAll() {

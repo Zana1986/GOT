@@ -28,11 +28,27 @@ public class EpisodeHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
+    public Episode getOne(int nummer, int epiNummer) {
+        String queryString = "FROM Episode e WHERE e.staffelNummer = :num AND e.epiNummer = :epiNum";
+        Query query = this.getSession().createQuery(queryString);
+        query.setParameter("num", nummer);
+        query.setParameter("epiNum", epiNummer);
+        Episode episode = (Episode) query.uniqueResult();
+        this.closeAll();
+        return episode;
+    }
+
     public List<Episode> getAllByStaffel(int nummer) {
         String queryString = "FROM Episode e WHERE e.staffelNummer = :num";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("num", nummer);
         List<Episode> episoden = (List<Episode>) query.list();
+        this.closeAll();
+        return episoden;
+    }
+
+    public List<Episode> getAllOrdered() {
+        List episoden = this.getSession().createQuery("FROM Episode").list();
         this.closeAll();
         return episoden;
     }

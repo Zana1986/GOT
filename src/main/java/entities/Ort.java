@@ -54,8 +54,16 @@ public class Ort {
         return owners;
     }
 
+    public void setOwners(Set<Beherrschen> owners) {
+        this.owners = owners;
+    }
+
     public Set<Handlungsort> getHoOwners() {
         return hoOwners;
+    }
+
+    public void setHoOwners(Set<Handlungsort> hoOwners) {
+        this.hoOwners = hoOwners;
     }
 
     @Override
@@ -72,7 +80,8 @@ public class Ort {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = 17;
+        result = 31 * result + id;
         result = 31 * result + (ortName != null ? ortName.hashCode() : 0);
         return result;
     }

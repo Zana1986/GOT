@@ -48,7 +48,7 @@
         <div class="col-sm-3">
             <ul class="list-unstyled">
                 <#list staffeln as staffel>
-                    <li><a href="/staffel/${staffel.nummer}?nummer=${staffel.nummer}">Staffel ${staffel.nummer}</a></li>
+                    <li><a href="/staffel/s${staffel.nummer}">Staffel ${staffel.nummer}</a></li>
                 </#list>
             </ul>
             <form class="navbar-left" action="/suchen?suchTyp=Staffel" method="post">
@@ -62,7 +62,7 @@
         <div class="col-sm-3">
             <ul class="list-unstyled">
                 <#list playlisten as playliste>
-                    <li><a href="/playliste/${playliste.id}">Playliste ${playliste.id}</a></li>
+                    <li><a href="/playliste/${playliste.id}">${playliste.name}</a></li>
                 </#list>
             </ul>
             <#if loginKennung??>

@@ -1,6 +1,6 @@
 <#include "base.ftl">
 <#macro extra_files>
-<script type="text/javascript" src="../js/main.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 </#macro>
 <#macro page_body>
 <div class="container">
@@ -53,7 +53,7 @@
             <form action="/bewertung" method="post">
                 <div class="form-group">
                     <label for="bewertung">Bewertung</label>
-                    <select lass="form-control" name="bewertungsNiveau">
+                    <select class="form-control" name="bewertungsNiveau">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>

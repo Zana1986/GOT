@@ -24,15 +24,15 @@ public class StaffelBewertungHelper extends HibernateSessionFactorySupportImpl {
         this.commitTransaction();
     }
 
-    public void deleteStaffelBewertung(int nummer) {
+    public void deleteStaffelBewertung(StaffelBewertung staffelwertung) {
         this.beginTrasaction();
-        //this.getSession().delete(this.getOne();
+        this.getSession().delete(staffelwertung);
         this.commitTransaction();
     }
 
     public int getAllByStaffel(int nummer) {
         String queryString = "SELECT AVG(b.rating) FROM StaffelBewertung sb INNER JOIN Bewertung b " +
-                "ON (sb.bewertungid = b.bewertungid and sb.benutzerid = b.benutzerid) " +
+                "ON (sb.bewertungid = b.bewertungid and sb.benutzer.id = b.benutzer.id) " +
                 "WHERE sb.staffel.nummer = :num ";
         Query query = this.getSession().createQuery(queryString);
         query.setParameter("num", nummer);

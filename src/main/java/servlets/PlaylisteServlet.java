@@ -17,7 +17,15 @@ import java.util.regex.Pattern;
 @WebServlet(name = "PlaylisteServlet", urlPatterns = {"/playliste", "/playliste/*"})
 public class PlaylisteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if (request.getRequestURI().equals("/playliste/neu")) {
+            String loginKennung = request.getParameter("loginKennung");
+            String playlisteName = request.getParameter("playlisteName");
+            if (loginKennung != null) {
+                PlaylisteHelper playlisteHelper = new PlaylisteHelper();
+                Playliste playliste = playlisteHelper.neuePlayliste(playlisteName, loginKennung);
+            }
+            response.sendRedirect("/index");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +46,7 @@ public class PlaylisteServlet extends HttpServlet {
         } else if (!request.getRequestURI().equals("/playliste")) {
             String loginKennung = request.getParameter("loginKennung");
             if (loginKennung != null) {
-                Playliste playliste = playlisteHelper.neuePlayliste(loginKennung);
+                Playliste playliste = playlisteHelper.neuePlayliste("Playliste 1024", loginKennung);
                 if (playliste != null) {
                     request.setAttribute("playliste", playliste);
                 }
@@ -52,7 +60,5 @@ public class PlaylisteServlet extends HttpServlet {
             }
             request.getRequestDispatcher("/templates/playliste.ftl").forward(request, response);
         }
-
-
     }
 }

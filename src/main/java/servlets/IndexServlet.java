@@ -30,6 +30,7 @@ public class IndexServlet extends HttpServlet {
         if (figuren != null && !figuren.isEmpty()) {
             request.setAttribute("figuren", figuren);
         }
+
         List<Haus> haeuser = suchenHelper.getHausLimit(5);
         if (haeuser != null && !haeuser.isEmpty()) {
             request.setAttribute("haeuser", haeuser);

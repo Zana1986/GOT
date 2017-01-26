@@ -1,52 +1,47 @@
 <#include "base.ftl">
 <#macro page_body>
-<#--<div class="container">-->
-    <#if episoden??>
-        <#list episoden as episode>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="/staffel">Staffel ${episode.staffelNummer}</a> <a href="/staffel/${episode.staffelNummer}?nummer=${episode.staffelNummer}">Episode ${episode.epiNummer}</a> ${episode.titel}
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <ul class="col-sm-4 col-md-3" style="margin-left: 15px;">
-                            <li>${episode.inhaltsAngabe}</li>
-                            <li>${episode.erstausstrahlungsDatum}</li>
-                            <li>
-                                <#list 1..5 as x>
-                                <#if x <= ratings[episode.epiNummer]>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                <#else>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </#if>
-                                </#list>
-                            </li>
-                        </ul>
-                        <div class="row col-sm-4 col-md-4" style="border-left: 1px solid #f3f3f3;">
-                            <#list figurenEpisoden[episode.epiNummer] as auftreten>
-                            <div class="col-sm-2">
-                                <p>
-                                    <a href="<#if auftreten.figur.type==1>/person/<#else>/tier/${auftreten.figur.name}</#if>">
-                                        ${auftreten.figur.name}
-                                    </a>
-                                </p>
-                            </div>
-                            </#list>
-                        </div>
-                        <div class="col-sm-4 col-md-4">
-                            <#if episode.episodeHOrte??>
-                                <#list episode.episodeHOrte as hort>
-                                <p><a href="/ort/${hort.ort.ortName}">${hort.ort.ortName}</a></p>
-                                </#list>
-                            </#if>
-                        </div>
-                    </div>
-                </div>
+    <#if loginKennung??>
+    <div class="container">
+        <form action="/bewertung/anlegen?loginKennung=${loginKennung}" method="post">
+            <div class="form-group">
+                <label for="bewertung">Bewertung zu Staffel ${staffelnummer}</label>
+                <select class="form-control" name="bewertungsNiveau">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <textarea class="form-control" name="bewertungsInhalt" rows="5" id="bewertung"></textarea>
             </div>
-        </#list>
+            <input name="bewertungstyp" value="staffel" style="display: none">
+            <input name="staffelnummer" value="${staffelnummer}" style="display: none">
+            <button type="submit" class="btn btn-default">Bewerten</button>
+        </form>
+    </div>
     <#else>
-        <div class="alert alert-warning" role="alert"><p>Keine Episoden gefunden.</p></div>
+    <div class="container">
+        <h4 class="text-danger">Bitte anmelden zum Bewerten der Staffel ${staffelnummer}.</h4>
+    </div>
     </#if>
-<#--</div>-->
+
+    <#if episoden??>
+    <div class="container">
+        <#list episoden as episode>
+            <ul>
+                <li>
+                    <a href="/staffel/s${episode.staffelNummer}/e${episode.epiNummer}">
+                    ${episode.titel} ${episode.epiNummer}
+                    </a>
+                     ${episode.erstausstrahlungsDatum}
+                </li>
+            </ul>
+        </#list>
+    </div>
+    <#else>
+        <div class="container alert alert-warning" role="alert">
+            <p>Keine Episoden gefunden.</p>
+        </div>
+    </#if>
 </#macro>
 <@dispaly_page/>

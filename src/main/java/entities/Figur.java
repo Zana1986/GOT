@@ -3,7 +3,9 @@ package entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yafei on 05/01/2017.
@@ -20,12 +22,15 @@ public class Figur implements Serializable {
     //1: Person, 2:Tier
     private int type;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="herkunftsort", referencedColumnName = "ortid")
     private Ort herkunftsort;
 
-    @OneToMany(mappedBy = "figur", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AuftretenIn> episoden = new ArrayList<AuftretenIn>();
+    @OneToMany(mappedBy = "figur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<AuftretenIn> episoden = new HashSet<>();
+
+    @OneToMany(mappedBy = "figur", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<FigurBewertung> figurBewertungen = new HashSet<>();
 
     public Figur() {}
     public Figur(String name, Ort herkunftsort) {
@@ -65,8 +70,20 @@ public class Figur implements Serializable {
         this.herkunftsort = herkunftsort;
     }
 
-    public List<AuftretenIn> getEpisoden() {
+    public Set<FigurBewertung> getFigurBewertungen() {
+        return figurBewertungen;
+    }
+
+    public void setFigurBewertungen(Set<FigurBewertung> figurBewertungen) {
+        this.figurBewertungen = figurBewertungen;
+    }
+
+    public Set<AuftretenIn> getEpisoden() {
         return episoden;
+    }
+
+    public void setEpisoden(Set<AuftretenIn> episoden) {
+        this.episoden = episoden;
     }
 
     public void addEpisode(Episode episode) {

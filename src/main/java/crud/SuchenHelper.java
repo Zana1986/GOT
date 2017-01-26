@@ -13,8 +13,6 @@ import java.util.List;
  * Created by Yafei on 10/01/2017.
  */
 public class SuchenHelper extends HibernateSessionFactorySupportImpl {
-
-
     public List<Figur> getFigurLimit(int limit) {
         Query query = this.getSession().createQuery("FROM Figur f");
         query.setMaxResults(limit);

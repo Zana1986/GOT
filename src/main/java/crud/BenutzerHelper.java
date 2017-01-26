@@ -40,7 +40,13 @@ public class BenutzerHelper extends HibernateSessionFactorySupportImpl {
     public boolean isExisted(String loginkennung) {
         Query query = this.getSession().createQuery("FROM Benutzer b WHERE b.loginKennung = :kennung");
         query.setParameter("kennung", loginkennung);
-        return query.uniqueResult() != null;
+        if (query.uniqueResult() != null) {
+            this.closeAll();
+            return true;
+        } else {
+            this.closeAll();
+            return false;
+        }
     }
 
     public boolean checkUser(String loginkennung, String passwort) {
@@ -58,6 +64,7 @@ public class BenutzerHelper extends HibernateSessionFactorySupportImpl {
         Query query = this.getSession().createQuery("FROM Benutzer b WHERE b.loginKennung = :kennung");
         query.setParameter("kennung", loginkennung);
         Benutzer benutzer = (Benutzer) query.uniqueResult();
+        this.closeAll();
         return benutzer;
     }
 
@@ -65,6 +72,7 @@ public class BenutzerHelper extends HibernateSessionFactorySupportImpl {
         Query query = this.getSession().createQuery("SELECT b.id FROM Benutzer b WHERE b.loginKennung = :kennung");
         query.setParameter("kennung", loginkennung);
         int benutzerId = (int) query.uniqueResult();
+        this.closeAll();
         return benutzerId;
     }
 
